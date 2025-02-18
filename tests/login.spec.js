@@ -41,14 +41,16 @@ test('Deve acessar a conta do usuário', async ({ page }) => {
   await loginPage.informaSenha(usuario.senha)
 
   await page.waitForTimeout(10000)
-  const codigo = await obterCodigo2FA()
+  const codigo = await obterCodigo2FA('00000014141')
   await loginPage.informa2FA(codigo)
 
-  await page.waitForTimeout(5000)
+  // Checkpoint
+  await page.getByRole('heading', { name: 'Verificação em duas etapas' }).waitFor({timeout: 8000})
+
   await expect(await dashPage.obterSaldo()).toHaveText('R$ 5.000,00')
 });
 
-test('Deve acessar a conta do usuário 2', async ({ page }) => {
+test('Deve acessar a conta do usuário utilizando actions', async ({ page }) => {
 
   const loginActions = new LoginActions(page)
 
@@ -62,10 +64,11 @@ test('Deve acessar a conta do usuário 2', async ({ page }) => {
   await loginActions.informaCpf(usuario.cpf)
   await loginActions.informaSenha(usuario.senha)
 
-  await page.waitForTimeout(10000)
-  const codigo = await obterCodigo2FA()
+  // Checkpoint
+  await page.getByRole('heading', { name: 'Verificação em duas etapas' }).waitFor({timeout: 8000})
+
+  const codigo = await obterCodigo2FA('00000014141')
   await loginActions.informa2FA(codigo)
 
-  await page.waitForTimeout(5000)
   await expect(await loginActions.obterSaldo()).toHaveText('R$ 5.000,00')
 });
