@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import { obterCodigo2FA } from '../support/db';
 import { LoginPage } from '../pages/LoginPage';
 import { DashPage } from '../pages/DashPage';
+import { LoginActions } from '../actions/LoginActions';
 
 
 test('Não deve logar quando o código de validação é inválido', async ({ page }) => {
@@ -45,4 +46,26 @@ test('Deve acessar a conta do usuário', async ({ page }) => {
 
   await page.waitForTimeout(5000)
   await expect(await dashPage.obterSaldo()).toHaveText('R$ 5.000,00')
+});
+
+test('Deve acessar a conta do usuário 2', async ({ page }) => {
+
+  const loginActions = new LoginActions(page)
+
+  await loginActions.visitaPagina()
+
+  const usuario = {
+    cpf: '00000014141',
+    senha: '147258'
+  }
+  
+  await loginActions.informaCpf(usuario.cpf)
+  await loginActions.informaSenha(usuario.senha)
+
+  await page.waitForTimeout(10000)
+  const codigo = await obterCodigo2FA()
+  await loginActions.informa2FA(codigo)
+
+  await page.waitForTimeout(5000)
+  await expect(await loginActions.obterSaldo()).toHaveText('R$ 5.000,00')
 });
