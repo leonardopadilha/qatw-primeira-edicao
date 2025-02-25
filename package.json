@@ -11,7 +11,8 @@
     "test:sp": "npx playwright test ",
     "test:db": "npx playwright test --debug",
     "test:cd": "npx playwright codegen",
-    "test:rl": "npx playwright show-report"
+    "test:rl": "npx playwright show-report",
+    "allure": "npx allure serve"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,8 @@
     "@types/node": "^22.13.1"
   },
   "dependencies": {
+    "allure-commandline": "^2.32.2",
+    "allure-playwright": "^3.2.0",
     "bullmq": "^5.41.2",
     "pg-promise": "^11.10.2"
   }
