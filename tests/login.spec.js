@@ -21,7 +21,7 @@ test('Não deve logar quando o código de validação é inválido', async ({ pa
 
   await loginPage.informa2FA('123456')
 
-  await page.waitForTimeout(5000)
+  // await page.waitForTimeout(5000)
 
   await expect(page.locator('span')).toContainText('Código inválido. Por favor, tente novamente.');
 });
