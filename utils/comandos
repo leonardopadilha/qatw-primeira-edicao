@@ -1,0 +1,6 @@
+usuário e senha do Jenkins: devops
+email: devops@jenkins.io
+
+comandos para descobrir a senha no container do Jenkins
+docker exec -it jenkins-server bash
+cat /var/jenkins_home/secrets/initialAdminPassword

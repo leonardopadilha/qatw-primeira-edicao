@@ -26,7 +26,7 @@ test('Não deve logar quando o código de validação é inválido', async ({ pa
   await expect(page.locator('span')).toContainText('Código inválido. Por favor, tente novamente.');
 });
 
-test('Deve acessar a conta do usuário', async ({ page }) => {
+test('Deve acessar a conta do usuário e consultar o código na fila do redis', async ({ page }) => {
 
   const loginPage = new LoginPage(page)
   const dashPage = new DashPage(page)
@@ -54,7 +54,7 @@ test('Deve acessar a conta do usuário', async ({ page }) => {
   await expect(await dashPage.obterSaldo()).toHaveText('R$ 5.000,00')
 });
 
-test('Deve acessar a conta do usuário utilizando actions', async ({ page }) => {
+test('Deve acessar a conta do usuário utilizando actions e consultar o código via banco de dados', async ({ page }) => {
 
   const loginActions = new LoginActions(page)
 
